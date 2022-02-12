@@ -6,18 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web Components</title>
 
-    <style>
-      div {
-        border: 4px solid orange;
-      }
-    </style>
-
     <script src="./tooltip.js"></script>
   </head>
   <body>
+    <template id="tooltip-template"></template>
     <p>
       <my-tooltip text="Web Components are amazing!!"></my-tooltip>
     </p>
     <my-tooltip>Here We go!</my-tooltip>
+    <div>This element has not the same style of my web component</div>
   </body>
 </html>
