@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Components</title>
+
+    <style>
+      div {
+        border: 4px solid orange;
+      }
+      .highlight {
+        /* This styles are applied outside the shadow DOM */
+        background-color: yellowgreen;
+      }
+    </style>
+
+    <script src="./tooltip.js"></script>
+    <script src="./confirm-link.js"></script>
+  </head>
+  <body>
+    <p>
+      <my-tooltip text="Web Components are amazing!!"
+        ><span class="highlight">This element is inside slot</span></my-tooltip
+      >
+    </p>
+    <my-tooltip>Here We go!</my-tooltip>
+    <div>This element has not the same style of my web component</div>
+
+    <a href="https://google.com" is="my-confirm-link">Google</a>
+  </body>
+</html>
