@@ -10,6 +10,12 @@
       div {
         border: 4px solid orange;
       }
+
+      /* Styling Web components outside shadow DOM */
+      my-tooltip {
+        border: 5px solid blue;
+      }
+
       .highlight {
         /* This styles are applied outside the shadow DOM */
         background-color: yellowgreen;
@@ -22,7 +28,8 @@
   <body>
     <p>
       <my-tooltip text="Web Components are amazing!!"
-        ><span class="highlight">This element is inside slot</span></my-tooltip
+        >Web Component are a standard
+        <span class="highlight">This element is inside slot</span></my-tooltip
       >
     </p>
     <my-tooltip>Here We go!</my-tooltip>

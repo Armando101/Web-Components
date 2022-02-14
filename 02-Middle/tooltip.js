@@ -47,9 +47,19 @@ class Tooltip extends HTMLElement {
           /* This styles are inside my shadow DOM */
           border: 1px dotted red;
         }
+        .icon {
+          background: black;
+          color: white;
+          text-align: center;
+          border-radius: 50%;
+        }
+        /* Styling Web components inside shadow DOM */
+        :host {
+          background: #ccc;
+        }
       </style>
       <slot>Some default</slot>
-      <span>(?)</span>`;
+      <span class="icon">(?)</span>`;
   }
 }
 
