@@ -57,6 +57,17 @@ class Tooltip extends HTMLElement {
         :host {
           background: #ccc;
         }
+
+        /* We can style with a condition */
+        :host(.is-purple) {
+          background: purple;
+          color: white;
+        }
+
+        /* Onl applied this styles if the WC in inside a paragraph tag with the class paragraph */
+        :host-context(p.paragraph) {
+          font-weight: bold;
+        }
       </style>
       <slot>Some default</slot>
       <span class="icon">(?)</span>`;
