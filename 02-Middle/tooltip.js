@@ -58,6 +58,11 @@ class Tooltip extends HTMLElement {
           background: #ccc;
         }
 
+        /* Styling using custom css */
+        :host {
+          background: var(--primary, #ccc);
+        }
+
         /* We can style with a condition */
         :host(.is-purple) {
           background: purple;
