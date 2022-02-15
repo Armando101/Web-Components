@@ -3,21 +3,20 @@ class Modal extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = this.htmlTemplate;
+    this.isOpen = false;
   }
 
-  // We are replacing this commented code by adding styles in the template depending on attribute opened
-  // attributeChangedCallback(name, oldValue, newValue) {
-  //   if (name === "opened" && this.isOpened) {
-  //     this.shadowRoot.querySelector("#backdrop").style.opacity = 1;
-  //     this.shadowRoot.querySelector("#backdrop").style.pointerEvents = "all";
-  //     this.shadowRoot.querySelector("#modal").style.opacity = 1;
-  //     this.shadowRoot.querySelector("#modal").style.pointerEvents = "all";
-  //   }
-  // }
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (name === "opened" && this.isOpened) {
+      this.isOpen = true;
+    } else {
+      this.open = false;
+    }
+  }
 
-  // static get observedAttributes() {
-  //   return ["opened"];
-  // }
+  static get observedAttributes() {
+    return ["opened"];
+  }
 
   get isOpened() {
     return this.hasAttribute("opened");
@@ -41,7 +40,7 @@ class Modal extends HTMLElement {
         :host([opened]) #backdrop,
         :host([opened]) #modal {
           opacity: 1;
-          pointer-events: 'all';
+          pointer-events: all;
         }
 
         #modal {
@@ -97,6 +96,14 @@ class Modal extends HTMLElement {
         </section>
       </div>
     `;
+  }
+
+  /**
+   * Open modal
+   */
+  open() {
+    console.log("open");
+    this.setAttribute("opened", "");
   }
 }
 
