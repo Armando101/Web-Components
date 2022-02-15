@@ -9,15 +9,32 @@ class Tooltip extends HTMLElement {
   }
 
   connectedCallback() {
-    if (this.hasAttribute("text")) {
-      this._tooltipText = this.getAttribute("text");
-    }
+    this.addTooltipText();
     const tooltipIcon = this.shadowRoot.querySelector("span");
     tooltipIcon.textContent = " (?)";
     tooltipIcon.addEventListener("mouseenter", this._showTooltip.bind(this));
     tooltipIcon.addEventListener("mouseleave", this._hideTooltip.bind(this));
     this.shadowRoot.appendChild(tooltipIcon);
     this.style.position = "relative";
+  }
+
+  addTooltipText() {
+    if (this.hasAttribute("text")) {
+      this._tooltipText = this.getAttribute("text");
+    }
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) {
+      return;
+    }
+    if (name === "text") {
+      this._tooltipText = newValue;
+    }
+  }
+
+  static get observedAttributes() {
+    return ["text"];
   }
 
   _showTooltip() {
