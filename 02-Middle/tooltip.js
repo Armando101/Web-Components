@@ -1,12 +1,13 @@
 class Tooltip extends HTMLElement {
   constructor() {
     super(); // It's requred to call super method to invoke parent constructor
-    this._tooltipContainer;
+
     this._tooltipText = "Some dummy tooltip text.";
 
     this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = this._htmlTemplate();
     this.tooltipIcon;
+    this._tooltipVisible = false;
   }
 
   connectedCallback() {
@@ -23,6 +24,7 @@ class Tooltip extends HTMLElement {
     );
     this.shadowRoot.appendChild(this.tooltipIcon);
     this.style.position = "relative";
+    this._render();
   }
 
   addTooltipText() {
@@ -45,13 +47,13 @@ class Tooltip extends HTMLElement {
   }
 
   _showTooltip() {
-    this._tooltipContainer = document.createElement("div");
-    this._tooltipContainer.textContent = this._tooltipText;
-    this.shadowRoot.appendChild(this._tooltipContainer);
+    this._tooltipVisible = true;
+    this._render();
   }
 
   _hideTooltip() {
-    this.shadowRoot.removeChild(this._tooltipContainer);
+    this._tooltipVisible = false;
+    this._render();
   }
 
   _htmlTemplate() {
@@ -102,9 +104,22 @@ class Tooltip extends HTMLElement {
       <span class="icon">(?)</span>`;
   }
 
+  _render() {
+    let tooltipContainer = this.shadowRoot.querySelector("div");
+    if (this._tooltipVisible) {
+      tooltipContainer = document.createElement("div");
+      tooltipContainer.textContent = this._tooltipText;
+      this.shadowRoot.appendChild(tooltipContainer);
+      return;
+    }
+    if (tooltipContainer) {
+      this.shadowRoot.removeChild(tooltipContainer);
+    }
+  }
+
   disconnectedCallback() {
     this.tooltipIcon.removeEventListener("mouseenter", this._showTooltip);
-    this.tooltipIcon.removeEventListener("mouseleave", this._showTooltip);
+    this.tooltipIcon.removeEventListener("mouseleave", this._hideTooltip);
   }
 }
 
