@@ -6,15 +6,22 @@ class Tooltip extends HTMLElement {
 
     this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = this._htmlTemplate();
+    this.tooltipIcon;
   }
 
   connectedCallback() {
     this.addTooltipText();
-    const tooltipIcon = this.shadowRoot.querySelector("span");
-    tooltipIcon.textContent = " (?)";
-    tooltipIcon.addEventListener("mouseenter", this._showTooltip.bind(this));
-    tooltipIcon.addEventListener("mouseleave", this._hideTooltip.bind(this));
-    this.shadowRoot.appendChild(tooltipIcon);
+    this.tooltipIcon = this.shadowRoot.querySelector("span");
+    this.tooltipIcon.textContent = " (?)";
+    this.tooltipIcon.addEventListener(
+      "mouseenter",
+      this._showTooltip.bind(this)
+    );
+    this.tooltipIcon.addEventListener(
+      "mouseleave",
+      this._hideTooltip.bind(this)
+    );
+    this.shadowRoot.appendChild(this.tooltipIcon);
     this.style.position = "relative";
   }
 
@@ -93,6 +100,11 @@ class Tooltip extends HTMLElement {
       </style>
       <slot>Some default</slot>
       <span class="icon">(?)</span>`;
+  }
+
+  disconnectedCallback() {
+    this.tooltipIcon.removeEventListener("mouseenter", this._showTooltip);
+    this.tooltipIcon.removeEventListener("mouseleave", this._showTooltip);
   }
 }
 
