@@ -4,6 +4,13 @@ class Modal extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = this.htmlTemplate;
     this.isOpen = false;
+    const slots = this.shadowRoot.querySelectorAll("slot");
+  }
+
+  observeSlotChange() {
+    slots[1].addEventListener("slotchange", (event) => {
+      console.log(slots[1].assignedNodes());
+    });
   }
 
   attributeChangedCallback(name, oldValue, newValue) {
