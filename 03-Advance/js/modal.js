@@ -6,6 +6,12 @@ class Modal extends HTMLElement {
     this.isOpen = false;
     this.cancelEvent();
     this.confirmEvent();
+    this.backdropEvent();
+  }
+
+  backdropEvent() {
+    const backdrop = this.shadowRoot.querySelector("#backdrop");
+    backdrop.addEventListener("click", this.hide.bind(this));
   }
 
   cancelEvent() {
@@ -84,9 +90,13 @@ class Modal extends HTMLElement {
           pointer-events: all;
         }
 
+        :host([opened]) #modal {
+          top: 15vh;
+        }
+
         #modal {
           position: fixed;
-          top: 15vh;
+          top: 10vh;
           left: 25%;
           width: 50%;
           z-index: 100;
@@ -97,21 +107,25 @@ class Modal extends HTMLElement {
           justify-content: space-between;
           opacity: 0;
           pointer-events: none;
+          transition: all 0.3s ease-out;
         }
 
         header {
           padding: 1rem;
+          border-bottom: 1px solid #ccc;
         }
-
+        
         ::slotted(h1) {
           font-size: 1.25rem;
+          margin: 0;
         }
-
+        
         #main {
           padding: 1rem;
         }
-
+        
         #actions {
+          border-bottom: 1px solid #ccc;
           border-top: 1px solid gray;
           padding: 1rem;
           display: flex;
