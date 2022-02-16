@@ -4,10 +4,44 @@ class Modal extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = this.htmlTemplate;
     this.isOpen = false;
-    const slots = this.shadowRoot.querySelectorAll("slot");
+    this.cancelEvent();
+    this.confirmEvent();
+  }
+
+  cancelEvent() {
+    const cancelButton = this.shadowRoot.querySelector("#cancel-btn");
+    cancelButton.addEventListener("click", this._cancel.bind(this));
+    cancelButton.addEventListener("cancel", () => {
+      console.log("Cancel inside WC");
+    });
+  }
+
+  confirmEvent() {
+    const confirmButton = this.shadowRoot.querySelector("#confirm-btn");
+    confirmButton.addEventListener("click", this._confirm.bind(this));
+  }
+
+  hide() {
+    if (this.hasAttribute("opened")) {
+      this.removeAttribute("opened");
+    }
+    this.isOpen = false;
+  }
+
+  _cancel(event) {
+    this.hide();
+    const cancelEvent = new Event("cancel", { bubbles: true, composed: true });
+    event.target.dispatchEvent(cancelEvent);
+  }
+
+  _confirm() {
+    this.hide();
+    const confirmEvent = new Event("confirm");
+    this.dispatchEvent(confirmEvent);
   }
 
   observeSlotChange() {
+    const slots = this.shadowRoot.querySelectorAll("slot");
     slots[1].addEventListener("slotchange", (event) => {
       console.log(slots[1].assignedNodes());
     });
@@ -17,7 +51,7 @@ class Modal extends HTMLElement {
     if (name === "opened" && this.isOpened) {
       this.isOpen = true;
     } else {
-      this.open = false;
+      this.isOpen = false;
     }
   }
 
@@ -98,8 +132,8 @@ class Modal extends HTMLElement {
           <slot name="main"></slot>
         </section>
         <section id="actions">
-          <button>Cancel</button>
-          <button>Ok</button>
+          <button id="cancel-btn">Cancel</button>
+          <button id="confirm-btn">Ok</button>
         </section>
       </div>
     `;
