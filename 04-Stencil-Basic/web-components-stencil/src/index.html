@@ -7,14 +7,11 @@
 
     <script type="module" src="/build/web-components-stencil.esm.js"></script>
     <script nomodule src="/build/web-components-stencil.js"></script>
+    <style></style>
   </head>
   <body>
-    <app-side-drawer title="Main menu"></app-side-drawer>
-    <script>
-      const sideDrawer = document.querySelector('app-side-drawer');
-      setTimeout(() => {
-        sideDrawer.title = 'It changed!!';
-      }, 3000);
-    </script>
+    <app-side-drawer title="Main menu">
+      <app-navigation></app-navigation>
+    </app-side-drawer>
   </body>
 </html>

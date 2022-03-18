@@ -6,6 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface AppNavigation {
+    }
     interface AppSideDrawer {
         "title": string;
     }
@@ -25,6 +27,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLAppNavigationElement extends Components.AppNavigation, HTMLStencilElement {
+    }
+    var HTMLAppNavigationElement: {
+        prototype: HTMLAppNavigationElement;
+        new (): HTMLAppNavigationElement;
+    };
     interface HTMLAppSideDrawerElement extends Components.AppSideDrawer, HTMLStencilElement {
     }
     var HTMLAppSideDrawerElement: {
@@ -38,11 +46,14 @@ declare global {
         new (): HTMLMyComponentElement;
     };
     interface HTMLElementTagNameMap {
+        "app-navigation": HTMLAppNavigationElement;
         "app-side-drawer": HTMLAppSideDrawerElement;
         "my-component": HTMLMyComponentElement;
     }
 }
 declare namespace LocalJSX {
+    interface AppNavigation {
+    }
     interface AppSideDrawer {
         "title"?: string;
     }
@@ -61,6 +72,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface IntrinsicElements {
+        "app-navigation": AppNavigation;
         "app-side-drawer": AppSideDrawer;
         "my-component": MyComponent;
     }
@@ -69,6 +81,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "app-navigation": LocalJSX.AppNavigation & JSXBase.HTMLAttributes<HTMLAppNavigationElement>;
             "app-side-drawer": LocalJSX.AppSideDrawer & JSXBase.HTMLAttributes<HTMLAppSideDrawerElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }

@@ -1,0 +1,8 @@
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: black;
+}
