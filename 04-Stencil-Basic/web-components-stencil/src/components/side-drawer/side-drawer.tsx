@@ -1,4 +1,4 @@
-import { Component, h } from "@stencil/core";
+import { Component, h, Prop } from "@stencil/core";
 
 @Component({
   tag: 'app-side-drawer',
@@ -6,7 +6,14 @@ import { Component, h } from "@stencil/core";
   shadow: true
 })
 export class SideDrawer {
+  @Prop({ reflect: true }) title: string;
+
   render() {
-    return <aside><h1>The side drawer</h1></aside>
+    return <aside>
+      <header><h1>{this.title}</h1></header>
+      <main>
+        <slot/>
+      </main>
+    </aside>
   }
 }

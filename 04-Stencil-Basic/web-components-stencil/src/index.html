@@ -9,6 +9,12 @@
     <script nomodule src="/build/web-components-stencil.js"></script>
   </head>
   <body>
-    <app-side-drawer></app-side-drawer>
+    <app-side-drawer title="Main menu"></app-side-drawer>
+    <script>
+      const sideDrawer = document.querySelector('app-side-drawer');
+      setTimeout(() => {
+        sideDrawer.title = 'It changed!!';
+      }, 3000);
+    </script>
   </body>
 </html>
