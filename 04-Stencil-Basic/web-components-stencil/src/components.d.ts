@@ -9,6 +9,7 @@ export namespace Components {
     interface AppNavigation {
     }
     interface AppSideDrawer {
+        "open": boolean;
         "title": string;
     }
     interface MyComponent {
@@ -55,6 +56,7 @@ declare namespace LocalJSX {
     interface AppNavigation {
     }
     interface AppSideDrawer {
+        "open"?: boolean;
         "title"?: string;
     }
     interface MyComponent {
