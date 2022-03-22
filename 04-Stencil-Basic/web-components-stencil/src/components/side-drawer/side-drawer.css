@@ -1,17 +1,39 @@
+:host([open]) aside {
+  inset-inline-start: 0;
+}
+
 aside {
   position: fixed;
   inset-block-start: 0;
-  inset-inline-start: 0;
+  inset-inline-start: -100%;
   inline-size: 30rem;
   max-inline-size: 80%;
   block-size: 100vh;
   background-color: #f3f3f3;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  transition: inset-inline-start 0.3s ease-out;
 }
 
 header {
   padding: 1rem;
   background-color: black;
+  position: relative;
+}
+
+header button {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  padding: 1rem;
+  color: white;
+  background-color: transparent;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+}
+
+header button:focus {
+  outline: none;
 }
 
 header h1 {

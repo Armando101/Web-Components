@@ -10,8 +10,19 @@
     <style></style>
   </head>
   <body>
-    <app-side-drawer open title="Main menu">
+    <button id="side-drawer-btn">Open side menu</button>
+    <app-side-drawer title="Main menu">
       <app-navigation></app-navigation>
     </app-side-drawer>
+    <script>
+      const $sideDrawerButton = document.querySelector('#side-drawer-btn');
+      const $sideDrawer = document.querySelector('app-side-drawer');
+
+      $sideDrawerButton.addEventListener('click', () => {
+        if (!$sideDrawer.open) {
+          $sideDrawer.open = true;
+        }
+      });
+    </script>
   </body>
 </html>
