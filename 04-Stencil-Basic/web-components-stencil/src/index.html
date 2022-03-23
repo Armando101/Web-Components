@@ -19,8 +19,9 @@
       const $sideDrawer = document.querySelector('app-side-drawer');
 
       $sideDrawerButton.addEventListener('click', () => {
-        if (!$sideDrawer.open) {
-          $sideDrawer.open = true;
+        if (!$sideDrawer.opened) {
+          // $sideDrawer.open = true;
+          $sideDrawer.open();
         }
       });
     </script>

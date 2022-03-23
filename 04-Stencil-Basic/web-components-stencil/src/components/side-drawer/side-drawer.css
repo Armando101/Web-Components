@@ -1,4 +1,4 @@
-:host([open]) aside {
+:host([opened]) aside {
   inset-inline-start: 0;
 }
 
