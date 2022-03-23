@@ -20,7 +20,7 @@ export class SideDrawer {
 
   @Method()
   open() {
-      this.opened = true;
+    this.opened = true;
   }
 
   render() {
@@ -40,18 +40,20 @@ export class SideDrawer {
       )
     }
 
-    return <aside>
-            <header>
-              <h1>{this.title}</h1>
-              <button onClick={this.onCloseDrawer.bind(this)}>x</button>
-            </header>
-            <section class="tabs" id="tabs">
-              <button class={!this.showContactInfo && "active"} onClick={this.onContentChange.bind(this, 'nav')}>Navigation</button>
-              <button class={this.showContactInfo && "active"} onClick={this.onContentChange.bind(this, 'contact')}>Content</button>
-            </section>
-            <main>
-              {mainContent}
-            </main>
-          </aside>
+    return [
+      <div class="backdrop" onClick={this.onCloseDrawer.bind(this)}/>,
+      <aside>
+        <header>
+          <h1>{this.title}</h1>
+          <button onClick={this.onCloseDrawer.bind(this)}>x</button>
+        </header>
+        <section class="tabs" id="tabs">
+          <button class={!this.showContactInfo && "active"} onClick={this.onContentChange.bind(this, 'nav')}>Navigation</button>
+          <button class={this.showContactInfo && "active"} onClick={this.onContentChange.bind(this, 'contact')}>Content</button>
+        </section>
+        <main>
+          {mainContent}
+        </main>
+      </aside>]
   }
 }
