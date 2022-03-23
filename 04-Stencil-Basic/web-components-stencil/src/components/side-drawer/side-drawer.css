@@ -41,3 +41,36 @@ header h1 {
   color: white;
   margin: 0;
 }
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  inline-size: 100%;
+  padding: 1rem 0;
+}
+
+.tabs button {
+  inline-size: 30%;
+  background-color: transparent;
+  color: black;
+  text-align: center;
+  border: 1px solid black;
+  font: inherit;
+  padding: 0.15rem 0;
+  cursor: pointer;
+}
+
+.tabs button.active,
+.tabs button:hover,
+.tabs button:active {
+  background-color: black;
+  color: white;
+}
+
+.tabs button:focus {
+  outline: none;
+}
+
+.contactInformation {
+  padding: 0 1rem;
+}
