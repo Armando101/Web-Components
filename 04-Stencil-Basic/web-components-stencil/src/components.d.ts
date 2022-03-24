@@ -13,6 +13,8 @@ export namespace Components {
         "opened": boolean;
         "title": string;
     }
+    interface AppTooltip {
+    }
     interface MyComponent {
         /**
           * The first name
@@ -41,6 +43,12 @@ declare global {
         prototype: HTMLAppSideDrawerElement;
         new (): HTMLAppSideDrawerElement;
     };
+    interface HTMLAppTooltipElement extends Components.AppTooltip, HTMLStencilElement {
+    }
+    var HTMLAppTooltipElement: {
+        prototype: HTMLAppTooltipElement;
+        new (): HTMLAppTooltipElement;
+    };
     interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
     }
     var HTMLMyComponentElement: {
@@ -50,6 +58,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "app-navigation": HTMLAppNavigationElement;
         "app-side-drawer": HTMLAppSideDrawerElement;
+        "app-tooltip": HTMLAppTooltipElement;
         "my-component": HTMLMyComponentElement;
     }
 }
@@ -59,6 +68,8 @@ declare namespace LocalJSX {
     interface AppSideDrawer {
         "opened"?: boolean;
         "title"?: string;
+    }
+    interface AppTooltip {
     }
     interface MyComponent {
         /**
@@ -77,6 +88,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "app-navigation": AppNavigation;
         "app-side-drawer": AppSideDrawer;
+        "app-tooltip": AppTooltip;
         "my-component": MyComponent;
     }
 }
@@ -86,6 +98,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "app-navigation": LocalJSX.AppNavigation & JSXBase.HTMLAttributes<HTMLAppNavigationElement>;
             "app-side-drawer": LocalJSX.AppSideDrawer & JSXBase.HTMLAttributes<HTMLAppSideDrawerElement>;
+            "app-tooltip": LocalJSX.AppTooltip & JSXBase.HTMLAttributes<HTMLAppTooltipElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
         }
     }

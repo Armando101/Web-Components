@@ -1,0 +1,29 @@
+.tooltip-legend {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+}
+
+.tooltip span {
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tooltip-info p {
+  margin: 0;
+  background-color: black;
+  color: white;
+  display: inline;
+}
+
+.show {
+  display: block;
+}
+
+.hidde {
+  display: none;
+}
