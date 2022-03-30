@@ -31,3 +31,9 @@ form button:hover,
 form button:active {
   background-color: rgb(175, 88, 175);
 }
+
+form button:disabled {
+  background-color: #ccc;
+  border-color: #ccc;
+  color: white;
+}
