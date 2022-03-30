@@ -7,12 +7,14 @@ import { AV_API_KEY } from "../../global/global";
   shadow: true
 })
 export class StockPrice {
-  @Element() el: HTMLElement;
+  stockInput: HTMLInputElement;
+  // @Element() el: HTMLElement;
   @State() price: number;
 
   onFetchStockPrice(event: Event) {
-    const stockSymbol = (this.el.shadowRoot.querySelector('#stock-symbol') as HTMLInputElement).value;
     event.preventDefault();
+    // const stockSymbol = (this.el.shadowRoot.querySelector('#stock-symbol') as HTMLInputElement).value;
+    const stockSymbol = this.stockInput.value;
     fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${AV_API_KEY}`)
     .then(res => {
       return res.json();
@@ -29,7 +31,7 @@ export class StockPrice {
   render() {
     return [
       <form onSubmit={this.onFetchStockPrice.bind(this)}>
-        <input id="stock-symbol" type="text" />
+        <input id="stock-symbol" ref={el => this.stockInput = el} type="text" />
         <button type="submit">Fetch</button>
       </form>,
       <div>
