@@ -1,4 +1,4 @@
-import { Component, Element, h, State } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 import { AV_API_KEY } from '../../global/global';
 
 @Component({
@@ -8,11 +8,11 @@ import { AV_API_KEY } from '../../global/global';
 })
 export class StockPrice {
   stockInput: HTMLInputElement;
-  // @Element() el: HTMLElement;
   @State() price: number;
   @State() stockUserInput: string;
   @State() stockInputValid = false;
   @State() error: string;
+  @Prop() stockSymbol: string;
 
   onUserInput(event: Event) {
     this.stockUserInput = (event.target as HTMLInputElement).value;
@@ -23,10 +23,7 @@ export class StockPrice {
     }
   }
 
-  onFetchStockPrice(event: Event) {
-    event.preventDefault();
-    // const stockSymbol = (this.el.shadowRoot.querySelector('#stock-symbol') as HTMLInputElement).value;
-    const stockSymbol = this.stockInput.value;
+  fetchStockPrice(stockSymbol: string) {
     fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${AV_API_KEY}`)
       .then(res => {
         if (res.status !== 200) {
@@ -45,6 +42,35 @@ export class StockPrice {
       .catch(err => {
         this.error = err.message;
       });
+  }
+
+  onFetchStockPrice(event: Event) {
+    event.preventDefault();
+    const stockSymbol = this.stockInput.value;
+    this.fetchStockPrice(stockSymbol);
+  }
+
+  componentDidLoad() {
+    if (this.stockSymbol) {
+      this.fetchStockPrice(this.stockSymbol);
+    }
+  }
+
+  componentWillLoad() {
+    console.log('componentWillLoad');
+    console.log(this.stockSymbol);
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate');
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+  }
+
+  disconnectedCallback() {
+    console.log('componentDidUnload');
   }
 
   render() {
