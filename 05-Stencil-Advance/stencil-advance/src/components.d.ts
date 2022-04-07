@@ -53,6 +53,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AppStockFinder {
+        "onUcSymbolSelected"?: (event: CustomEvent<string>) => void;
     }
     interface AppStockPrice {
         "stockSymbol"?: string;
