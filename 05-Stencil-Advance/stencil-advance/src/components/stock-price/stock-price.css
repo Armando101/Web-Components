@@ -6,6 +6,10 @@
   display: block;
 }
 
+:host(.error) {
+  border-color: orange;
+}
+
 form input {
   font: inherit;
   color: rgb(87, 3, 87);

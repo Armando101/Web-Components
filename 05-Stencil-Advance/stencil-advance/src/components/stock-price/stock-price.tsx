@@ -38,7 +38,7 @@ export class StockPrice {
     fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${AV_API_KEY}`)
       .then(res => {
         if (res.status !== 200) {
-          throw new Error('Invali!');
+          throw new Error('Invalid!');
         }
         return res.json();
       })
@@ -52,6 +52,7 @@ export class StockPrice {
       })
       .catch(err => {
         this.error = err.message;
+        this.price = null;
       });
   }
 
@@ -90,6 +91,10 @@ export class StockPrice {
 
   disconnectedCallback() {
     console.log('componentDidUnload');
+  }
+
+  hostData() {
+    return { class: this.error ? 'hydrated error' : 'hydrated' };
   }
 
   render() {
