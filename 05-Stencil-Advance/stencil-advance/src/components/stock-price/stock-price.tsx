@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Listen, Prop, State, Watch } from '@stencil/core';
 import { AV_API_KEY } from '../../global/global';
 
 @Component({
@@ -14,6 +14,7 @@ export class StockPrice {
   @State() stockUserInput: string;
   @State() stockInputValid = false;
   @State() error: string;
+  @State() loading = false;
 
   @Prop({ mutable: true, reflect: true }) stockSymbol: string;
 
@@ -35,13 +36,14 @@ export class StockPrice {
   }
 
   fetchStockPrice(stockSymbol: string) {
+    this.loading = true;
     fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${stockSymbol}&apikey=${AV_API_KEY}`)
-      .then(res => {
-        if (res.status !== 200) {
-          throw new Error('Invali!');
-        }
-        return res.json();
-      })
+    .then(res => {
+      if (res.status !== 200) {
+        throw new Error('Invalid!');
+      }
+      return res.json();
+    })
       .then(res => {
         const response = res['Global Quote']['05. price'];
         if (!response) {
@@ -49,9 +51,12 @@ export class StockPrice {
         }
         this.error = null;
         this.price = Number(response);
+        this.loading = false;
       })
       .catch(err => {
         this.error = err.message;
+        this.price = null;
+        this.loading = false;
       });
   }
 
@@ -69,25 +74,31 @@ export class StockPrice {
     }
   }
 
-  componentWillLoad() {
-    console.log('componentWillLoad');
-    console.log(this.stockSymbol);
-  }
+  componentWillLoad() {}
 
-  componentWillUpdate() {
-    console.log('componentWillUpdate');
-  }
+  componentWillUpdate() {}
 
   componentDidUpdate() {
-    console.log('componentDidUpdate');
     // if (this.stockSymbol !== this.initialStockSymbol) {
     //   this.initialStockSymbol = this.stockSymbol;
     //   this.fetchStockPrice(this.stockSymbol);
     // }
   }
 
+  @Listen('ucSymbolSelected', {target: 'body'})
+  onStockSymbolSelected(event: CustomEvent) {
+    console.log('Stock selected ', event.detail);
+    if (event.detail && event.detail !== this.stockSymbol) {
+      this.stockSymbol = event.detail;
+    }
+  }
+
   disconnectedCallback() {
     console.log('componentDidUnload');
+  }
+
+  hostData() {
+    return { class: this.error ? 'hydrated error' : 'hydrated' };
   }
 
   render() {
@@ -98,10 +109,13 @@ export class StockPrice {
     if (this.price) {
       dataContent = <p>Price: ${this.price || 0}</p>;
     }
+    if (this.loading) {
+      dataContent = <app-spinner></app-spinner>
+    }
     return [
       <form onSubmit={this.onFetchStockPrice.bind(this)}>
         <input id="stock-symbol" ref={el => (this.stockInput = el)} type="text" value={this.stockUserInput} onInput={this.onUserInput.bind(this)} />
-        <button type="submit" disabled={!this.stockInputValid}>
+        <button type="submit" disabled={!this.stockInputValid || this.loading}>
           Fetch
         </button>
       </form>,
