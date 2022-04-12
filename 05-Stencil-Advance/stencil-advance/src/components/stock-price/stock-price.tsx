@@ -110,14 +110,7 @@ export class StockPrice {
       dataContent = <p>Price: ${this.price || 0}</p>;
     }
     if (this.loading) {
-      dataContent = (
-        <div class="lds-ellipsis">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      );
+      dataContent = <app-spinner></app-spinner>
     }
     return [
       <form onSubmit={this.onFetchStockPrice.bind(this)}>
